@@ -52,7 +52,7 @@
   #define BAUDRATE 115200
 
   #define CR10_STOCKDISPLAY
-  
+
   #define X_MIN_ENDSTOP_INVERTING false
   #define Y_MIN_ENDSTOP_INVERTING false
   #define Z_MIN_ENDSTOP_INVERTING false
@@ -70,14 +70,14 @@
       #define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 95 }
 	#endif
   #endif
-  
+
   #define DEFAULT_MAX_FEEDRATE          { 200, 200, 15, 50 }
   #define DEFAULT_MAX_ACCELERATION      { 500, 800, 500, 5000 }
 
-  #define DEFAULT_ACCELERATION          500   
-  #define DEFAULT_RETRACT_ACCELERATION  500  
-  #define DEFAULT_TRAVEL_ACCELERATION   500   
-  
+  #define DEFAULT_ACCELERATION          500
+  #define DEFAULT_RETRACT_ACCELERATION  500
+  #define DEFAULT_TRAVEL_ACCELERATION   500
+
   #if ENABLED(CR10_S4) || ENABLED(CR10_S5)
     #define DEFAULT_XJERK                 5.0
     #define DEFAULT_YJERK                 5.0
@@ -87,22 +87,22 @@
   #endif
   #define DEFAULT_ZJERK                  0.3
   #define DEFAULT_EJERK                  5.0
-  
+
   #define INVERT_X_DIR true
   #define INVERT_Y_DIR true
-  
+
   #if ENABLED(ENDER5)
     #define INVERT_Z_DIR true
   #else
     #define INVERT_Z_DIR false
   #endif
-  
+
   #if ENABLED(TITAN_EXTRUDER)
     #define INVERT_E0_DIR false
   #else
     #define INVERT_E0_DIR true
   #endif
-    
+
   #ifndef MOTHERBOARD
     #define MOTHERBOARD BOARD_TH3D_TOUGH_CONTROLLER
   #endif
@@ -130,13 +130,13 @@
     #define Y_BED_SIZE 500
     #define Z_MAX_POS 500
   #endif
-  
+
   #if ENABLED(ENDER3)
     #define X_BED_SIZE 235
     #define Y_BED_SIZE 235
     #define Z_MAX_POS 250
   #endif
-  
+
   #if ENABLED(ENDER5)
     #define X_BED_SIZE 220
     #define Y_BED_SIZE 220
@@ -150,16 +150,16 @@
     #define X_MIN_POS 0
     #define Y_MIN_POS 0
   #endif
-  
+
   #define ENCODER_PULSES_PER_STEP 4
   #define ENCODER_STEPS_PER_MENU_ITEM 1
-  
+
   #define PRINTER_ENABLED_CHECK
 
 #endif //end CR-10
 
 //Machine Check
-#if DISABLED(PRINTER_ENABLED_CHECK) 
+#if DISABLED(PRINTER_ENABLED_CHECK)
   #error "READ THIS: No printer uncommented in Configuration.h file. Please uncomment your printer and try again."
 #endif
 
@@ -184,8 +184,7 @@
 #define CUSTOM_STATUS_SCREEN_IMAGE
 
 //Fixes issues with XY not homing due to noisy endstop cables
-#define ENDSTOP_NOISE_FILTER
-#define ENDSTOP_NOISE_FILTER_SAMPLING 2
+#define ENDSTOP_NOISE_THRESHOLD 2
 
 #define STRING_CONFIG_H_AUTHOR "(TH3D Studio)"
 
@@ -231,13 +230,13 @@
   #define TEMP_SENSOR_BED 5
 #endif
 
-#define TEMP_RESIDENCY_TIME 5  
-#define TEMP_HYSTERESIS 3      
-#define TEMP_WINDOW     1      
+#define TEMP_RESIDENCY_TIME 5
+#define TEMP_HYSTERESIS 3
+#define TEMP_WINDOW     1
 
-#define TEMP_BED_RESIDENCY_TIME 5 
+#define TEMP_BED_RESIDENCY_TIME 5
 #define TEMP_BED_HYSTERESIS 3
-#define TEMP_BED_WINDOW     1     
+#define TEMP_BED_WINDOW     1
 
 #define HEATER_0_MINTEMP 5
 #define HEATER_1_MINTEMP HEATER_0_MINTEMP
@@ -272,7 +271,7 @@
   #define  DEFAULT_Kp 22.2
   #define  DEFAULT_Ki 1.08
   #define  DEFAULT_Kd 114
-#endif 
+#endif
 
 #define PIDTEMPBED
 
@@ -293,7 +292,7 @@
 #define PREVENT_LENGTHY_EXTRUDE
 #define EXTRUDE_MAXLENGTH 1000
 
-#define THERMAL_PROTECTION_HOTENDS 
+#define THERMAL_PROTECTION_HOTENDS
 #define THERMAL_PROTECTION_BED
 
 /**
@@ -339,16 +338,16 @@
 #else
   #define HOMING_FEEDRATE_Z  (8*60)
 #endif
-  
+
 #if ENABLED(EZABL_ENABLE)
   #define RESTORE_LEVELING_AFTER_G28
-  
+
   #if DISABLED(BLTOUCH)
     #define FIX_MOUNTED_PROBE
   #endif
-  
+
   #define Z_PROBE_OFFSET_FROM_EXTRUDER 0
-  
+
   #if ENABLED(PROBING_MOTORS_OFF)
     #define XY_PROBE_SPEED 8000
   #else
@@ -358,16 +357,16 @@
       #define XY_PROBE_SPEED 12000
     #endif
   #endif
-  
+
   #define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
-  #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)  
-  
+  #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
+
   #if (ENABLED(FIX_MOUNTED_PROBE) || ENABLED(BLTOUCH)) && DISABLED(HEATERS_ON_DURING_PROBING)
-    #define PROBING_HEATERS_OFF   
-  #endif  
-  
+    #define PROBING_HEATERS_OFF
+  #endif
+
   #define MULTIPLE_PROBING 2
-  
+
   #if ENABLED(BLTOUCH)
     #define Z_CLEARANCE_DEPLOY_PROBE   15
     #define Z_CLEARANCE_BETWEEN_PROBES 10
@@ -377,35 +376,35 @@
     #define Z_CLEARANCE_BETWEEN_PROBES 3
 	#define Z_CLEARANCE_MULTI_PROBE    3
   #endif
-  
+
   #define Z_PROBE_OFFSET_RANGE_MIN  -5
-  #define Z_PROBE_OFFSET_RANGE_MAX  1  
-  
-  #define Z_MIN_PROBE_REPEATABILITY_TEST  
+  #define Z_PROBE_OFFSET_RANGE_MAX  1
+
+  #define Z_MIN_PROBE_REPEATABILITY_TEST
   #define Z_AFTER_PROBING           5
-  #define Z_PROBE_LOW_POINT         -3  
-  
+  #define Z_PROBE_LOW_POINT         -3
+
   #define AUTO_BED_LEVELING_BILINEAR
-  
+
   #define Z_SAFE_HOMING
-  
+
   #define GRID_MAX_POINTS_X EZABL_POINTS
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
-  
+
   #define LEFT_PROBE_BED_POSITION (max(EZABL_PROBE_EDGE, X_PROBE_OFFSET_FROM_EXTRUDER))
   #define RIGHT_PROBE_BED_POSITION (min(X_BED_SIZE - EZABL_PROBE_EDGE, X_BED_SIZE + X_PROBE_OFFSET_FROM_EXTRUDER))
   #define FRONT_PROBE_BED_POSITION (max(EZABL_PROBE_EDGE, Y_PROBE_OFFSET_FROM_EXTRUDER))
   #define BACK_PROBE_BED_POSITION (min(Y_BED_SIZE - EZABL_PROBE_EDGE, Y_BED_SIZE + Y_PROBE_OFFSET_FROM_EXTRUDER))
-  
+
   #define MIN_PROBE_EDGE 5
-  
+
   #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)
   #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)
-  
+
   #if ENABLED(EZABL_OUTSIDE_GRID_COMPENSATION)
     #define EXTRAPOLATE_BEYOND_GRID
   #endif
-  
+
   #if ENABLED(FIX_MOUNTED_PROBE)
     #undef Z_MIN_PROBE_ENDSTOP_INVERTING
     #define Z_MIN_PROBE_ENDSTOP_INVERTING true
@@ -431,7 +430,7 @@
 #define X_ENABLE_ON 0
 #define Y_ENABLE_ON 0
 #define Z_ENABLE_ON 0
-#define E_ENABLE_ON 0 
+#define E_ENABLE_ON 0
 
 #define DISABLE_X false
 #define DISABLE_Y false
@@ -457,7 +456,7 @@
   #define Y_HOME_DIR -1
   #define Z_HOME_DIR -1
 #endif
-  
+
 #define Z_MIN_POS 0
 #define X_MAX_POS X_BED_SIZE
 #define Y_MAX_POS Y_BED_SIZE
@@ -479,7 +478,7 @@
 #endif
 
 #if ENABLED(EZOUTV2_ENABLE) || (ENABLED(CR10S) && DISABLED(CR10S_NOFILAMENTSENSOR)) || (ENABLED(CR10S_MINI) && DISABLED(CR10S_NOFILAMENTSENSOR))  || (ENABLED(CR10S_S4) && DISABLED(CR10S_NOFILAMENTSENSOR)) || (ENABLED(CR10S_S5) && DISABLED(CR10S_NOFILAMENTSENSOR))
-  #define FILAMENT_RUNOUT_SENSOR  
+  #define FILAMENT_RUNOUT_SENSOR
   #if ENABLED(FILAMENT_RUNOUT_SENSOR)
     #if ENABLED(EZOUTV2_ENABLE)
       #define FIL_RUNOUT_INVERTING false
@@ -490,7 +489,7 @@
     #define FIL_RUNOUT_PULLUP
     #define FILAMENT_RUNOUT_SCRIPT "M600"
   #endif
-  
+
 #endif
 
 #if ENABLED(MANUAL_MESH_LEVELING) && DISABLED(EZABL_ENABLE)
@@ -498,10 +497,10 @@
   #define PROBE_MANUALLY
   #define LCD_BED_LEVELING
   #define MESH_BED_LEVELING
-  #define MBL_Z_STEP 0.025    
-  #define LCD_PROBE_Z_RANGE 4 
-  #define MESH_INSET 10          
-  #define GRID_MAX_POINTS_X 5    
+  #define MBL_Z_STEP 0.025
+  #define LCD_PROBE_Z_RANGE 4
+  #define MESH_INSET 10
+  #define GRID_MAX_POINTS_X 5
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 #endif
 
@@ -531,8 +530,8 @@
 
 #if ENABLED(NOZZLE_PARK_FEATURE)
   #define NOZZLE_PARK_POINT { 10, 10, 10 }
-  #define NOZZLE_PARK_XY_FEEDRATE 100  
-  #define NOZZLE_PARK_Z_FEEDRATE 5  
+  #define NOZZLE_PARK_XY_FEEDRATE 100
+  #define NOZZLE_PARK_Z_FEEDRATE 5
 #endif
 
 #define PRINTJOB_TIMER_AUTOSTART

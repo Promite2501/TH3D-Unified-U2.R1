@@ -2,17 +2,17 @@
 * ************** How to use this firmware - READ THIS, yes actually read this. *********************************
 *
 * Uncomment means removing the 2 // in front of #define.
-* 
+*
 * FLASHING NOTES:
 * ALL slicers (Simplify3D, Cura, Slic3r, etc) or anything else that connects to the COM port must be CLOSED for the firmware to be flash.
 * If anything is connected to the COM port when flashing it will fail, typically "access denied" is listed in the error section of the Arduino IDE.
 * You MUST use the Included Arduino IDE to flash the firmware if on Windows and if you are on a Mac or Linux follow the guide in our knowledgebase to setup your IDE to work with the firmware.
-* 
-* EZABL SETUP NOTES: 
-* If you have EZABL uncomment the mount you are using with the printer. 
-* If you have a custom/unsupported mount uncomment #define CUSTOM_MOUNT and enter your offsets 
+*
+* EZABL SETUP NOTES:
+* If you have EZABL uncomment the mount you are using with the printer.
+* If you have a custom/unsupported mount uncomment #define CUSTOM_MOUNT and enter your offsets
 * below in the CUSTOM MOUNT section. Refer to the EZABL guide to get your offsets.
-* 
+*
 * STEP 1:
 * Select the correct board from the tools menu for the printer you are flashing.
 * Read the printer title for the model you are flashing, it will show what board to select.
@@ -21,10 +21,10 @@
 * Uncomment the printer you want to flash. The printers are sorted A-Z by brand name.
 * If you are using the Creality Dual board with the Ender 3/Ender 5/CR-20 then read the specific section below in that printer section on how to do this.
 *
-* STEP 3: 
+* STEP 3:
 * Select the COM port your printer is on from the Tools menu. If you do not see the COM port try
 * downloading the latest drivers from the manufacturer or TH3D site on our knowledgebase.
-* 
+*
 * STEP 4:
 * Verify you have the correct board selected, printer model uncommented, and if you are using EZOUT and/or EZABL
 * the lines you need to use them are also uncommented.
@@ -33,19 +33,19 @@
 * Once you have your settings verified click the arrow in the upper left to upload to the board.
 *
 * STEP 6:
-* Reset your eeprom. You can send M502 then M500 to reset the EEPROM OR on the printer LCD go to 
+* Reset your eeprom. You can send M502 then M500 to reset the EEPROM OR on the printer LCD go to
 * Control > Reset EEPROM to clear out the EEPROM to defaults.
 *
 * BOOTLOADER FLASHING NOTES:
 * For flashing your bootloader with an Uno make sure to select Arduino as ISP for the programmer
-* 
+*
 * There are other features in the TH3D Extras section so look there for V6 Hotend,
 * Bootscreen settings, Titan Extruder and more. You only need to edit this file.
-* 
+*
 * ERROR NOTES:
 * If you get errors flashing READ the message it gives you and double check that you selected
 * the correct board from the Tools menu in Arduino. Turn off any AV systems and reboot the computer.
-* 
+*
 * COMMUNITY REQUESTED FEATURES NOTE:
 * All features in the community requested features section are provided as-is with no support from TH3D.
 */
@@ -101,7 +101,7 @@
 // Default is 3 which gives you 3x3 grid for a total of 9 points. STICK WITH ODD NUMBERS
 #define EZABL_POINTS 3
 
-// If you want to probe in on the bed more than 15mm change this below. 
+// If you want to probe in on the bed more than 15mm change this below.
 // Do not use 30mm for the Standard CR-10/s or the S4 as you will be on the bed screws.
 // Try 50mm to avoid the binder clips if you use them. Do NOT go under 15mm here.
 // You can do down to 10mm on the Wanhao i3 since it cannot print on the entire bed.
@@ -227,7 +227,7 @@
 //#define FAN_FIX
 
 // Use your own printer name
-//#define USER_PRINTER_NAME "CHANGE ME" 
+//#define USER_PRINTER_NAME "CHANGE ME"
 
 // If your printer is homing to the endstops hard uncomment this to change the homing speed/divisor to make it less aggressive.
 //#define SLOWER_HOMING
@@ -266,8 +266,8 @@
 // You can still change these via GCode commands.
 
 // BL TOUCH ----------------------------------------
-// If you want to use the BL-Touch install your EZOut Board, uncomment the 2 lines below, uncomment the CUSTOM_PROBE option in your printer section, 
-// and then enter your probe offsets in the CUSTOM_PROBE section above. The Pin 27 boards on eBay are clones of our original EZOut. If you want to 
+// If you want to use the BL-Touch install your EZOut Board, uncomment the 2 lines below, uncomment the CUSTOM_PROBE option in your printer section,
+// and then enter your probe offsets in the CUSTOM_PROBE section above. The Pin 27 boards on eBay are clones of our original EZOut. If you want to
 // support the people that originally came up with the board you can get our EZOut breakout board here: http://EZOut.TH3DStudio.com
 // Sales from our shop allow us to allocate time for community firmware development at no charge to you. <3
 // If you have a V3 BL Touch also uncomment the BLTOUCH_V3 line to fix issues with the new V3 probe.
@@ -281,7 +281,7 @@
 // the Bootscreen and some Control > Motion menus will not be displayed due to space restrictions
 
 // MANUAL MESH LEVELING ----------------------------
-// If you want to use manual mesh leveling you can enable the below option. This is for generating a MANUAL mesh WITHOUT a probe. 
+// If you want to use manual mesh leveling you can enable the below option. This is for generating a MANUAL mesh WITHOUT a probe.
 // Mesh Bed Leveling Documentation: http://marlinfw.org/docs/gcode/G029-mbl.html If used with a 1284P board the bootscreen will be disabled to save space.
 // NOTE: If you want to automate the leveling process our EZABL kits do this for you. Check them out here: http://EZABL.TH3DStudio.com
 //#define MANUAL_MESH_LEVELING

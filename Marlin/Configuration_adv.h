@@ -102,7 +102,7 @@
   #define HOMING_BUMP_DIVISOR { 5, 5, 4 }
 #else
   #define HOMING_BUMP_DIVISOR { 2, 2, 4 }
-#endif Feedrate)
+#endif
 #define QUICK_HOME
 
 #define AXIS_RELATIVE_MODES {false, false, false, false}
@@ -341,15 +341,17 @@
   #endif
   #define DOUBLECLICK_FOR_Z_BABYSTEPPING
   #define DOUBLECLICK_MAX_INTERVAL 2000
+  
   //#define MOVE_Z_WHEN_IDLE              // Jump to the move Z menu on doubleclick when printer is idle.
+  
   #if ENABLED(MOVE_Z_WHEN_IDLE)
     #define MOVE_Z_IDLE_MULTIPLICATOR 1   // Multiply 1mm by this factor for the move step size.
   #endif
-#endif
 
   #if ENABLED(EZABL_ENABLE)
     #define BABYSTEP_ZPROBE_OFFSET
   #endif
+  
   #if ENABLED(BABYSTEP_ZPROBE_OFFSET)
     #define BABYSTEP_ZPROBE_GFX_OVERLAY   // Enable graphical overlay on Z-offset editor
   #endif
