@@ -193,7 +193,7 @@
 #define BOARD_BIQU_SKR_V1_1       1759  // BIQU SKR_V1.1 (Power outputs: Hotend0,Hotend1, Fan, Bed)
 #define BOARD_BIQU_B300_V1_0      1760  // BIQU B300_V1.0 (Power outputs: Hotend0, Fan, Bed, SPI Driver)
 #define BOARD_BIGTREE_SKR_V1_3    1761  // BIGTREE SKR_V1.3 (Power outputs: Hotend0, Hotend1, Fan, Bed)
-#define BOARD_TH3D_TOUGH_CONTROLLER 1762 //TH3D Tough Controller
+#define BOARD_TH3D_EZBOARD        1762  // TH3D EZBoard
 //
 // SAM3X8E ARM Cortex M3
 //

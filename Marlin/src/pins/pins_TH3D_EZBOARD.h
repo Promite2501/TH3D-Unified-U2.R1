@@ -22,14 +22,14 @@
  */
 
 /**
- * TH3D Tough Controller pin assignments
+ * TH3D EZBoard pin assignments
  */
 
 #ifndef TARGET_LPC1768
   #error "Oops! Make sure you have the LPC1768 environment selected in your IDE."
 #endif
 
-#define BOARD_NAME "TH3D Tough Controller"
+#define BOARD_NAME "TH3D EZBoard"
 
 //
 // Servos
@@ -41,12 +41,21 @@
 //
 // Limit Switches
 //
-#define X_MIN_PIN           P1_24   // 10k pullup to 3.3V
-//#define X_MAX_PIN           P1_26   // 10k pullup to 3.3V
-#define Y_MIN_PIN           P1_25   // 10k pullup to 3.3V
-//#define Y_MAX_PIN           P1_25   // 10k pullup to 3.3V
-#define Z_MIN_PIN           P1_26   // 10k pullup to 3.3V
-//#define Z_MAX_PIN           P1_29   // 10k pullup to 3.3V
+#if ENABLED(ENDER5)
+  #define X_MAX_PIN           P1_24   // 10k pullup to 3.3V
+  //#define X_MAX_PIN           P1_26   // 10k pullup to 3.3V
+  #define Y_MAX_PIN           P1_25   // 10k pullup to 3.3V
+  //#define Y_MAX_PIN           P1_25   // 10k pullup to 3.3V
+  #define Z_MIN_PIN           P1_26   // 10k pullup to 3.3V
+  //#define Z_MAX_PIN           P1_29   // 10k pullup to 3.3V
+#else
+  #define X_MIN_PIN           P1_24   // 10k pullup to 3.3V
+  //#define X_MAX_PIN           P1_26   // 10k pullup to 3.3V
+  #define Y_MIN_PIN           P1_25   // 10k pullup to 3.3V
+  //#define Y_MAX_PIN           P1_25   // 10k pullup to 3.3V
+  #define Z_MIN_PIN           P1_26   // 10k pullup to 3.3V
+  //#define Z_MAX_PIN           P1_29   // 10k pullup to 3.3V
+#endif
 
 //
 // Steppers

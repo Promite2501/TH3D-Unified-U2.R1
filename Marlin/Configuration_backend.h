@@ -104,7 +104,7 @@
   #endif
 
   #ifndef MOTHERBOARD
-    #define MOTHERBOARD BOARD_TH3D_TOUGH_CONTROLLER
+    #define MOTHERBOARD BOARD_TH3D_EZBOARD
   #endif
 
   #if ENABLED(CR10)
