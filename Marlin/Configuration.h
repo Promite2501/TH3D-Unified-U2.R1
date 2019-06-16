@@ -1,339 +1,321 @@
+/**
+* ************** How to use this firmware - READ THIS, yes actually read this. *********************************
+*
+* Uncomment means removing the 2 // in front of #define.
+* 
+* FLASHING NOTES:
+* ALL slicers (Simplify3D, Cura, Slic3r, etc) or anything else that connects to the COM port must be CLOSED for the firmware to be flash.
+* If anything is connected to the COM port when flashing it will fail, typically "access denied" is listed in the error section of the Arduino IDE.
+* You MUST use the Included Arduino IDE to flash the firmware if on Windows and if you are on a Mac or Linux follow the guide in our knowledgebase to setup your IDE to work with the firmware.
+* 
+* EZABL SETUP NOTES: 
+* If you have EZABL uncomment the mount you are using with the printer. 
+* If you have a custom/unsupported mount uncomment #define CUSTOM_MOUNT and enter your offsets 
+* below in the CUSTOM MOUNT section. Refer to the EZABL guide to get your offsets.
+* 
+* STEP 1:
+* Select the correct board from the tools menu for the printer you are flashing.
+* Read the printer title for the model you are flashing, it will show what board to select.
+*
+* STEP 2:
+* Uncomment the printer you want to flash. The printers are sorted A-Z by brand name.
+* If you are using the Creality Dual board with the Ender 3/Ender 5/CR-20 then read the specific section below in that printer section on how to do this.
+*
+* STEP 3: 
+* Select the COM port your printer is on from the Tools menu. If you do not see the COM port try
+* downloading the latest drivers from the manufacturer or TH3D site on our knowledgebase.
+* 
+* STEP 4:
+* Verify you have the correct board selected, printer model uncommented, and if you are using EZOUT and/or EZABL
+* the lines you need to use them are also uncommented.
+*
+* STEP 5:
+* Once you have your settings verified click the arrow in the upper left to upload to the board.
+*
+* STEP 6:
+* Reset your eeprom. You can send M502 then M500 to reset the EEPROM OR on the printer LCD go to 
+* Control > Reset EEPROM to clear out the EEPROM to defaults.
+*
+* BOOTLOADER FLASHING NOTES:
+* For flashing your bootloader with an Uno make sure to select Arduino as ISP for the programmer
+* 
+* There are other features in the TH3D Extras section so look there for V6 Hotend,
+* Bootscreen settings, Titan Extruder and more. You only need to edit this file.
+* 
+* ERROR NOTES:
+* If you get errors flashing READ the message it gives you and double check that you selected
+* the correct board from the Tools menu in Arduino. Turn off any AV systems and reboot the computer.
+* 
+* COMMUNITY REQUESTED FEATURES NOTE:
+* All features in the community requested features section are provided as-is with no support from TH3D.
+*/
+
 #pragma once
 
 #define CONFIGURATION_H_VERSION 020000
-#define STRING_CONFIG_H_AUTHOR "(TH3D Studio)" // Who made the changes.
-#define SHOW_BOOTSCREEN
-#define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
-#define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
 
-#define SHOW_CUSTOM_BOOTSCREEN
-#define CUSTOM_STATUS_SCREEN_IMAGE
 
-#define SERIAL_PORT -1
+//===========================================================================
+//============================ TH3D Configuration ===========================
+//===========================================================================
 
-#define BAUDRATE 115200
+// ONLY UNCOMMENT THINGS IN ONE PRINTER SECTION!!! IF YOU HAVE MULTIPLE MACHINES FLASH THEM ONE AT A TIME.
 
-#ifndef MOTHERBOARD
-  #define MOTHERBOARD BOARD_TH3D_TOUGH_CONTROLLER
+//===========================================================================
+// *************************   CREALITY PRINTERS    *************************
+// *************************    EZBOARD SECTION     *************************
+//===========================================================================
+
+//===========================================================================
+// Creality CR-10/CR-10S/Ender3/Ender5 Options
+//===========================================================================
+//#define CR10
+//#define CR10_MINI
+//#define CR10_S4
+//#define CR10_S5
+//#define ENDER3
+//#define ENDER5
+
+// If you are using our EZOut Sensor connect to the FIL SENSOR header with the RED wire lined up with the "5V" marking by the header.
+//#define EZOUT_ENABLE
+
+// EZABL Probe Mounts
+//#define CR10_OEM
+//#define CR10_VOLCANO
+//#define CR10_V6HEAVYDUTY
+//#define CR10_FANG
+//#define TM3DAERO
+//#define TM3DAERO_EXTENDED
+//#define PETSFANG //This is the RIGHT mounted version - if using the left mount please use the CUSTOM_PROBE option.
+//#define CUSTOM_PROBE
+
+//===========================================================================
+// *************************  END PRINTER SECTION   *************************
+//===========================================================================
+
+//===========================================================================
+// EZABL Advanced Settings
+//===========================================================================
+
+// If you want more or less EZABL probe points change the number below (only used if EZABL enabled)
+// Default is 3 which gives you 3x3 grid for a total of 9 points. STICK WITH ODD NUMBERS
+#define EZABL_POINTS 3
+
+// If you want to probe in on the bed more than 15mm change this below. 
+// Do not use 30mm for the Standard CR-10/s or the S4 as you will be on the bed screws.
+// Try 50mm to avoid the binder clips if you use them. Do NOT go under 15mm here.
+// You can do down to 10mm on the Wanhao i3 since it cannot print on the entire bed.
+// You can do down to 5mm on the Wanhao i3 Mini since it cannot print on the entire bed.
+// (only used if EZABL enabled)
+#define EZABL_PROBE_EDGE 15
+
+// If you have issues with your machine running the faster probe setting disable the #define EZABL_FASTPROBE below.
+// DO NOTE: Most machines will work with the fast probe enabled. Use M48 to verify accuracy.
+#define EZABL_FASTPROBE
+
+// This will disable the XYE motors during probing. Can be useful if you have stepper motors causing interference issues with the EZABL sensor.
+//#define PROBING_MOTORS_OFF
+
+// Heaters will stay on during probing - only use if directed to by support. Do not use on AC beds.
+//#define HEATERS_ON_DURING_PROBING
+
+// Letting the bed heat recover between probes can increase accuracy due to the bed warping during cooling/heating
+// Enabling the below option will let the bed get back to temperature during probing but will increase probing times.
+//#define WAIT_FOR_BED_HEATER
+
+// If you want a more granular control over the babystepping uncomment the below line.
+// This will make the adjustment finer than the standard setting.
+//#define FINE_BABYSTEPPING
+
+// This will extrapolate the implied tilt of the bed outside of the probe area. Do not comment out unless directed by support.
+#define EZABL_OUTSIDE_GRID_COMPENSATION
+
+// Does your machine make weird noises/vibrations when it is probing the mesh? Enable this to slow down the speed between probe points.
+//#define SLOWER_PROBE_MOVES
+
+//================================================================================
+// IF YOU HAVE A CUSTOM PROBE MOUNT OR ONE THAT IS NOT PRE-SUPPORTED UNCOMMENT THE
+// CUSTOM_PROBE OPTION IN YOUR PRINTER SECTION AND ENTER YOUR PROBE LOCATION BELOW
+//================================================================================
+#if ENABLED(CUSTOM_PROBE)
+  /**
+  *   Z Probe to nozzle (X,Y) offset, relative to (0, 0).
+  *   X and Y offsets must be whole numbers.
+  *
+  *   In the following example the X and Y offsets are both positive:
+  *   #define X_PROBE_OFFSET_FROM_EXTRUDER 10
+  *   #define Y_PROBE_OFFSET_FROM_EXTRUDER 10
+  *
+  *      +-- BACK ---+
+  *      |           |
+  *    L |    (+) P  | R <-- probe (10,10)
+  *    E |           | I
+  *    F | (-) N (+) | G <-- nozzle (0,0)
+  *    T |           | H
+  *      |    (-)    | T
+  *      |           |
+  *      O-- FRONT --+
+  *    (0,0)
+  */
+  #define X_PROBE_OFFSET_FROM_EXTRUDER 10  // X offset: -left  +right  [of the nozzle]
+  #define Y_PROBE_OFFSET_FROM_EXTRUDER 10  // Y offset: -front +behind [the nozzle]
 #endif
 
-#define CUSTOM_MACHINE_NAME "Ender 3"
+//===========================================================================
+//******************** EXTRA FEATURES AND TWEAKS ****************************
+//===========================================================================
 
-#define EXTRUDERS 1
+// EXTRUDER SETTINGS -------------------------------
 
-#define DEFAULT_NOMINAL_FILAMENT_DIA 1.75
+// If you want to change the Esteps for your printer you can uncomment the below line and set CUSTOM_ESTEPS_VALUE to what you want - USE WHOLE NUMBERS ONLY
+//#define CUSTOM_ESTEPS
+#define CUSTOM_ESTEPS_VALUE 999
 
-#define POWER_SUPPLY 0
+// If you are using an TH3D Tough Extruder, Bondtech BMG (set steps below to 415), or E3D Titan Extruder
+// uncomment the below line to setup the firmware to the correct steps and direction. Also applicable to Titan/Tough Aero setups.
+//#define TITAN_EXTRUDER
+#define TITAN_EXTRUDER_STEPS 463
 
-#define TEMP_SENSOR_0 1
-#define TEMP_SENSOR_1 0
-#define TEMP_SENSOR_2 0
-#define TEMP_SENSOR_3 0
-#define TEMP_SENSOR_4 0
-#define TEMP_SENSOR_5 0
-#define TEMP_SENSOR_BED 1
-#define TEMP_SENSOR_CHAMBER 0
-#define CHAMBER_HEATER_PIN -1  // On/off pin for enclosure heating system
+// DUAL HOTEND SETTINGS ----------------------------
 
-// Extruder temperature must be close to target for this long before M109 returns success
-#define TEMP_RESIDENCY_TIME 10  // (seconds)
-#define TEMP_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
-#define TEMP_WINDOW     1       // (degC) Window around target to start the residency timer x degC early.
+// This is the distance between each nozzle tip when using a dual hotend like the TH3D Tough Dual Hotend or the E3D Chimera or Dual hotends.
+// This setting only applies to printers using a dual extruder board.
+#define DUAL_HOTEND_X_DISTANCE 18.0
 
-// Bed temperature must be close to target for this long before M190 returns success
-#define TEMP_BED_RESIDENCY_TIME 10  // (seconds)
-#define TEMP_BED_HYSTERESIS 3       // (degC) range of +/- temperatures considered "close" to the target one
-#define TEMP_BED_WINDOW     1       // (degC) Window around target to start the residency timer x degC early.
+// THERMISTOR SETTINGS -----------------------------
 
-#define HEATER_0_MINTEMP 5
-#define HEATER_1_MINTEMP HEATER_0_MINTEMP
-#define HEATER_2_MINTEMP HEATER_0_MINTEMP
-#define HEATER_3_MINTEMP HEATER_0_MINTEMP
-#define HEATER_4_MINTEMP HEATER_0_MINTEMP
-#define HEATER_5_MINTEMP HEATER_0_MINTEMP
-#define BED_MINTEMP HEATER_0_MINTEMP
+// If you are using an E3D V6 Hotend with their cartridge thermistor (not glass version) uncomment the below line.
+//#define V6_HOTEND
 
-#define HEATER_0_MAXTEMP 290
-#define HEATER_1_MAXTEMP HEATER_0_MAXTEMP
-#define HEATER_2_MAXTEMP HEATER_0_MAXTEMP
-#define HEATER_3_MAXTEMP HEATER_0_MAXTEMP
-#define HEATER_4_MAXTEMP HEATER_0_MAXTEMP
-#define HEATER_5_MAXTEMP HEATER_0_MAXTEMP
-#define BED_MAXTEMP 120
+// If you are using a Tough Hotend from TH3D or any thermistors TH3D sells for your hotend uncomment the below line.
+//#define TH3D_HOTEND_THERMISTOR
 
-#define PIDTEMP
-#define BANG_MAX 255     // Limits current to nozzle while in bang-bang mode; 255=full current
-#define PID_MAX BANG_MAX // Limits current to nozzle while PID is active (see PID_FUNCTIONAL_RANGE below); 255=full current
-#define PID_K1 0.95      // Smoothing factor within any PID loop
-#if ENABLED(PIDTEMP)
-  #define PID_EDIT_MENU           // Add PID editing to the "Advanced Settings" menu. (~700 bytes of PROGMEM)
-  #define PID_AUTOTUNE_MENU       // Add PID auto-tuning to the "Advanced Settings" menu. (~250 bytes of PROGMEM)
-  #define PID_FUNCTIONAL_RANGE 10
-  #define DEFAULT_Kp 21.73
-  #define DEFAULT_Ki 1.54
-  #define DEFAULT_Kd 76.55
-#endif
+// If you are using a thermistor TH3D sells for your bed uncomment the below line.
+//#define TH3D_BED_THERMISTOR
 
-#define PIDTEMPBED
+// If you are using a Keenovo with SSR and the Keenovo temperature sensor uncomment the below line.
+//#define KEENOVO_TEMPSENSOR
 
-#define MAX_BED_POWER 255
+// If you are using a known hotend thermistor value uncomment the below 2 lines and enter the thermistor number replacing the X after the #define KNOWN_HOTEND_THERMISTOR_VALUE
+//#define KNOWN_HOTEND_THERMISTOR
+//#define KNOWN_HOTEND_THERMISTOR_VALUE X
 
-#if ENABLED(PIDTEMPBED)
-  #define DEFAULT_bedKp 10.00
-  #define DEFAULT_bedKi .023
-  #define DEFAULT_bedKd 305.4
-#endif
+// If you are using a known bed thermistor value uncomment the below 2 lines and enter the thermistor number replacing the X after the #define KNOWN_BED_THERMISTOR_VALUE
+//#define KNOWN_BED_THERMISTOR
+//#define KNOWN_BED_THERMISTOR_VALUE X
 
-//#define PREVENT_COLD_EXTRUSION
-#define EXTRUDE_MINTEMP 170
+// If you want to make thermal protection periods less or more adjust below. The number is in seconds.
+// If you are getting false thermal runaway then increase the protection time. Do not make it over 300 for either setting.
+#define HOTEND_THERMAL_PROTECTION_TIME 60
+#define BED_THERMAL_PROTECTION_TIME 180
 
-#define PREVENT_LENGTHY_EXTRUDE
-#define EXTRUDE_MAXLENGTH 1000
+// BED SETTINGS ------------------------------------
 
-#define THERMAL_PROTECTION_HOTENDS // Enable thermal protection for all extruders
-#define THERMAL_PROTECTION_BED     // Enable thermal protection for the heated bed
+// If you want PID tuning on your bed you can enable the below line. But PID on a bed is not typically needed. By default BED PID is disabled.
+// This will be disabled when using automatic or manual mesh leveling with a 1284p board due to memory limitations.
+//#define PIDBED_ENABLE
 
-#define USE_XMIN_PLUG
-#define USE_YMIN_PLUG
-#define USE_ZMIN_PLUG
+// If you are using an AC bed with a standalone controller (Keenovo) uncomment the below line to disable the heated bed in the firmware
+//#define AC_BED
 
-#define ENDSTOPPULLUPS
+// Stock bed max is 120C for this firmware. Enable this to allow temps up to 150C. Your bed must support this temp for it to achieve the higher temperatures.
+//#define BED_HIGHTEMP
 
-#define X_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MIN_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MIN_ENDSTOP_INVERTING true // set to true to invert the logic of the endstop.
-#define X_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Y_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MAX_ENDSTOP_INVERTING false // set to true to invert the logic of the endstop.
-#define Z_MIN_PROBE_ENDSTOP_INVERTING true // set to true to invert the logic of the probe.
+// MISC --------------------------------------------
 
-#define X_DRIVER_TYPE  TMC2208
-#define Y_DRIVER_TYPE  TMC2208
-#define Z_DRIVER_TYPE  TMC2208
-#define E0_DRIVER_TYPE TMC2208
+// If you have a 5015 fan that whines when under 100% speed uncomment the below line.
+//#define FAN_FIX
+
+// Use your own printer name
+//#define USER_PRINTER_NAME "CHANGE ME" 
+
+// If your printer is homing to the endstops hard uncomment this to change the homing speed/divisor to make it less aggressive.
+//#define SLOWER_HOMING
+
+// BOOT SCREEN OPTIONS -----------------------------
+
+// Use TinyMachines Bootscreen instead of TH3D
+//#define TM3D_BOOT
+
+// Use Ender Bootscreeen instead of TH3D
+//#define ENDER_BOOT
+
+// Disable Bootscreen completely
+//#define DISABLE_BOOT
+
+//===========================================================================
+//****************** COMMUNITY REQUESTED FEATURES ***************************
+//===========================================================================
+
+// HOME OFFSET ADJUSTMENT --------------------------
+// If you need to adjust your XY home offsets from defaults then you can uncomment the HOME_ADJUST line below and enter your
+// custom XY offsets. This is provided for convenience and is unsupported with included product support.
+// How to use - measure (home XY then jog using the LCD 1mm at a time) the X and Y distance the nozzle is off
+// the build plate and then put those as NEGATIVE values below, positive values will NOT work (move your endstops to fix a positve offset).
+//#define HOME_ADJUST
+#define X_HOME_LOCATION -10
+#define Y_HOME_LOCATION -10
+
+// LINEAR ADVANCE ----------------------------------
+// See here on how to use Linear Advance: http://marlinfw.org/docs/features/lin_advance.html
+//
+//#define LINEAR_ADVANCE
+// Change the K Value here or use M900 KX.XX in your starting code (recommended).
+#define LINEAR_ADVANCE_K 0
+// NOTE: If using linear advance along with EZABL on a printer with 1284p some Control > Motion menus will not be displayed due to space restrictions.
+// You can still change these via GCode commands.
+
+// BL TOUCH ----------------------------------------
+// If you want to use the BL-Touch install your EZOut Board, uncomment the 2 lines below, uncomment the CUSTOM_PROBE option in your printer section, 
+// and then enter your probe offsets in the CUSTOM_PROBE section above. The Pin 27 boards on eBay are clones of our original EZOut. If you want to 
+// support the people that originally came up with the board you can get our EZOut breakout board here: http://EZOut.TH3DStudio.com
+// Sales from our shop allow us to allocate time for community firmware development at no charge to you. <3
+// If you have a V3 BL Touch also uncomment the BLTOUCH_V3 line to fix issues with the new V3 probe.
+//
+//#define BLTOUCH
+//#define BLTOUCH_V3
+// Here is where you set your servo pin. EZOut Servo Pin Numbers: Ender3/5/CR-10 - 27, Ender 2 - 29. For 2560 boards look for the pin you connected the servo wire to and enter below.
+//#define SERVO0_PIN 27
+//
+// NOTE: On 1284p boards due to space limitations and the large amount of code the BLTouch requires for the LCD Menus
+// the Bootscreen and some Control > Motion menus will not be displayed due to space restrictions
+
+// MANUAL MESH LEVELING ----------------------------
+// If you want to use manual mesh leveling you can enable the below option. This is for generating a MANUAL mesh WITHOUT a probe. 
+// Mesh Bed Leveling Documentation: http://marlinfw.org/docs/gcode/G029-mbl.html If used with a 1284P board the bootscreen will be disabled to save space.
+// NOTE: If you want to automate the leveling process our EZABL kits do this for you. Check them out here: http://EZABL.TH3DStudio.com
+//#define MANUAL_MESH_LEVELING
+
+// POWER LOSS RECOVERY -----------------------------
+// Continue after Power-Loss feature will store the current state to the SD Card at the start of each layer
+// during SD printing. If this is found at bootup it will ask you if you want to resume the print.
+//
+// NOTE: This feature causes excessive wear on your SD card. This will disable junction jerk,  SCurve Acceleration, and Linear Advance due to RAM limitations.
+//#define POWER_LOSS_RECOVERY
+
+// MOTION SETTINGS ---------------------------------
+// If you do not like the new Junction Deviation (Jerk) and/or S-Curve Acceleration then you can uncomment the below lines to disable each feature.
+// Due to Anet board restrictions this is always disabled on those machines.
+//#define JUNCTION_DEVIATION_DISABLE
+//#define S_CURVE_ACCELERATION_DISABLE
+
+//================================================================================================
+// Language - This is provided for convenience and is unsupported with included product support.
+// We only test compile with English language. If you run into space issues disable some features.
+//================================================================================================
 
 /**
- * Endstop Noise Threshold
+ * LCD LANGUAGE
  *
- * Enable if your probe or endstops falsely trigger due to noise.
+ * Select the language to display on the LCD. These languages are available:
  *
- * - Higher values may affect repeatability or accuracy of some bed probes.
- * - To fix noise install a 100nF ceramic capacitor inline with the switch.
- * - This feature is not required for common micro-switches mounted on PCBs
- *   based on the Makerbot design, which already have the 100nF capacitor.
- *
- * :[2,3,4,5,6,7]
+ *    en, an, bg, ca, cn, cz, cz_utf8, de, el, el-gr, es, eu, fi, fr, fr_utf8, gl,
+ *    hr, it, kana, kana_utf8, nl, pl, pt, pt_utf8, pt-br, pt-br_utf8, ru, sk_utf8,
+ *    tr, uk, zh_CN, zh_TW, test
  */
-//#define ENDSTOP_NOISE_THRESHOLD 2
 
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 463 }
-
-#define DEFAULT_MAX_FEEDRATE          { 500, 500, 15, 50 }
-
-#define DEFAULT_MAX_ACCELERATION      { 500, 500, 100, 5000 }
-
-#define DEFAULT_ACCELERATION          500    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  500    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   500    // X, Y, Z acceleration for travel (non printing) moves
-
-#define JUNCTION_DEVIATION
-#if ENABLED(JUNCTION_DEVIATION)
-  #define JUNCTION_DEVIATION_MM 0.02  // (mm) Distance from real junction edge
-#endif
-
-#if DISABLED(JUNCTION_DEVIATION)
-  #define DEFAULT_XJERK 10.0
-  #define DEFAULT_YJERK 10.0
-  #define DEFAULT_ZJERK  0.3
-#endif
-
-#define DEFAULT_EJERK    5.0  // May be used by Linear Advance
-
-#define S_CURVE_ACCELERATION
-
-#define Z_MIN_PROBE_USES_Z_MIN_ENDSTOP_PIN
-
-#define FIX_MOUNTED_PROBE
-
-#define X_PROBE_OFFSET_FROM_EXTRUDER -44  // X offset: -left  +right  [of the nozzle]
-#define Y_PROBE_OFFSET_FROM_EXTRUDER -10  // Y offset: -front +behind [the nozzle]
-#define Z_PROBE_OFFSET_FROM_EXTRUDER 0    // Z offset: -below +above  [the nozzle]
-
-#define MIN_PROBE_EDGE 5
-
-#define XY_PROBE_SPEED 12000
-
-#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
-
-#define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
-
-#define MULTIPLE_PROBING 2
-
-#define Z_CLEARANCE_DEPLOY_PROBE    5
-#define Z_CLEARANCE_BETWEEN_PROBES  3
-#define Z_CLEARANCE_MULTI_PROBE     3
-#define Z_AFTER_PROBING           5
-
-#define Z_PROBE_LOW_POINT          -3
-
-#define Z_PROBE_OFFSET_RANGE_MIN -5
-#define Z_PROBE_OFFSET_RANGE_MAX 2
-
-#define Z_MIN_PROBE_REPEATABILITY_TEST
-
-#define PROBING_HEATERS_OFF       // Turn heaters off when probing
-
-#define X_ENABLE_ON 0
-#define Y_ENABLE_ON 0
-#define Z_ENABLE_ON 0
-#define E_ENABLE_ON 0
-
-#define DISABLE_X false
-#define DISABLE_Y false
-#define DISABLE_Z false
-
-#define DISABLE_REDUCED_ACCURACY_WARNING
-
-#define DISABLE_E false
-
-#define INVERT_X_DIR true
-#define INVERT_Y_DIR true
-#define INVERT_Z_DIR false
-
-#define INVERT_E0_DIR false
-#define INVERT_E1_DIR false
-#define INVERT_E2_DIR false
-#define INVERT_E3_DIR false
-#define INVERT_E4_DIR false
-#define INVERT_E5_DIR false
-
-//#define UNKNOWN_Z_NO_RAISE // Don't raise Z (lower the bed) if Z is "unknown." For beds that fall when Z is powered off.
-
-#define Z_HOMING_HEIGHT 4
-
-#define X_HOME_DIR -1
-#define Y_HOME_DIR -1
-#define Z_HOME_DIR -1
-
-#define X_BED_SIZE 235
-#define Y_BED_SIZE 235
-
-#define X_MIN_POS 0
-#define Y_MIN_POS 0
-#define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE
-#define Y_MAX_POS Y_BED_SIZE
-#define Z_MAX_POS 250
-
-#define MIN_SOFTWARE_ENDSTOPS
-#if ENABLED(MIN_SOFTWARE_ENDSTOPS)
-  #define MIN_SOFTWARE_ENDSTOP_X
-  #define MIN_SOFTWARE_ENDSTOP_Y
-#endif
-
-#define MAX_SOFTWARE_ENDSTOPS
-#if ENABLED(MAX_SOFTWARE_ENDSTOPS)
-  #define MAX_SOFTWARE_ENDSTOP_X
-  #define MAX_SOFTWARE_ENDSTOP_Y
-  #define MAX_SOFTWARE_ENDSTOP_Z
-#endif
-
-#define FILAMENT_RUNOUT_SENSOR
-#if ENABLED(FILAMENT_RUNOUT_SENSOR)
-  #define NUM_RUNOUT_SENSORS   1     
-  #define FIL_RUNOUT_INVERTING false 
-  #define FIL_RUNOUT_PULLUP          
-  #define FILAMENT_RUNOUT_SCRIPT "M600"
-
-#endif
-
-#define AUTO_BED_LEVELING_BILINEAR
-
-#define RESTORE_LEVELING_AFTER_G28
-
-#if ENABLED(MESH_BED_LEVELING) || ENABLED(AUTO_BED_LEVELING_BILINEAR) || ENABLED(AUTO_BED_LEVELING_UBL)
-  #define ENABLE_LEVELING_FADE_HEIGHT
-  #define SEGMENT_LEVELED_MOVES
-  #define LEVELED_SEGMENT_LENGTH 5.0
-
-#endif
-
-#if ENABLED(AUTO_BED_LEVELING_LINEAR) || ENABLED(AUTO_BED_LEVELING_BILINEAR)
-  
-  #define GRID_MAX_POINTS_X 3
-  #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
-  
-  #define EZABL_PROBE_EDGE 30
-  #define LEFT_PROBE_BED_POSITION (max(EZABL_PROBE_EDGE, X_PROBE_OFFSET_FROM_EXTRUDER))
-  #define RIGHT_PROBE_BED_POSITION (min(X_BED_SIZE - EZABL_PROBE_EDGE, X_BED_SIZE + X_PROBE_OFFSET_FROM_EXTRUDER))
-  #define FRONT_PROBE_BED_POSITION (max(EZABL_PROBE_EDGE, Y_PROBE_OFFSET_FROM_EXTRUDER))
-  #define BACK_PROBE_BED_POSITION (min(Y_BED_SIZE - EZABL_PROBE_EDGE, Y_BED_SIZE + Y_PROBE_OFFSET_FROM_EXTRUDER))
-  
-  #if ENABLED(AUTO_BED_LEVELING_BILINEAR)
-    #define EXTRAPOLATE_BEYOND_GRID
-  #endif
-
-#endif
-
-#define LEVEL_BED_CORNERS
-
-#if ENABLED(LEVEL_BED_CORNERS)
-  #define LEVEL_CORNERS_INSET 30
-  #define LEVEL_CORNERS_Z_HOP  4.0
-#endif
-
-#define MANUAL_X_HOME_POS 0
-#define MANUAL_Y_HOME_POS 0
-#define MANUAL_Z_HOME_POS 0
-
-#define Z_SAFE_HOMING
-
-#if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)
-  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)
-#endif
-
-#define HOMING_FEEDRATE_XY (40*60)
-#define HOMING_FEEDRATE_Z  (8*60)
-
-
-#define VALIDATE_HOMING_ENDSTOPS
-
-#define EEPROM_SETTINGS
-#define EEPROM_CHITCHAT
-
-#define HOST_KEEPALIVE_FEATURE        
-#define DEFAULT_KEEPALIVE_INTERVAL 2  
-#define BUSY_WHILE_HEATING            
-
-#define PREHEAT_1_LABEL       "PLA"
-#define PREHEAT_1_TEMP_HOTEND 200
-#define PREHEAT_1_TEMP_BED     60
-#define PREHEAT_1_FAN_SPEED     0
-
-#define PREHEAT_2_LABEL       "ABS"
-#define PREHEAT_2_TEMP_HOTEND 240
-#define PREHEAT_2_TEMP_BED    100
-#define PREHEAT_2_FAN_SPEED     0
-
-#define NOZZLE_PARK_FEATURE
-
-#if ENABLED(NOZZLE_PARK_FEATURE)
-  #define NOZZLE_PARK_POINT { (X_MIN_POS + 10), (Y_MAX_POS - 10), 20 }
-  #define NOZZLE_PARK_XY_FEEDRATE 100
-  #define NOZZLE_PARK_Z_FEEDRATE 5
-#endif
-
-#define PRINTJOB_TIMER_AUTOSTART
 #define LCD_LANGUAGE en
-#define DISPLAY_CHARSET_HD44780 WESTERN
-#define LCD_INFO_SCREEN_STYLE 0
-#define SDSUPPORT
-#define INDIVIDUAL_AXIS_HOMING_MENU
-#define SPEAKER
-#define CR10_STOCKDISPLAY
 
 #include "Configuration_backend.h"
 
-#define UNIFIED_VERSION "TH3D U1.R2.9c"
-
+#define UNIFIED_VERSION "TH3D U2.R1.B1"
